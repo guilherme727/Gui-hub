@@ -1,7 +1,7 @@
 # Gui-hub
 
 -- Importe a Kaitun API
-local Kaitun = loadstring(game:HttpGet("(link unavailable)"))()
+local Kaitun = loadstring(game:HttpGet("https://raw.githubusercontent.com/guilherme727/Gui-hub/refs/heads/main/README.md"))()
 
 -- Crie a GUI
 local gui = Kaitun.CreateLib("Blox Fruits Hub", "Ocean")
