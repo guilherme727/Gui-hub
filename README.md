@@ -1,39 +1,32 @@
 # Gui-hub
+-- Settings
+local farmArea = Vector3.new(0, 10, 0) -- Farm area
+local farmRadius = 10 -- Farm radius
+local farmInterval = 1 -- Interval between farms
 
--- Importe a Kaitun API
-local Kaitun = loadstring(game:HttpGet("https://raw.githubusercontent.com/guilherme727/Gui-hub/refs/heads/main/README.md"))()
+-- Farm function
+local function farmResources()
+-- Find all resources within the farm area
+local resources = game:GetService("Workspace"):FindPartsWithinRadius(farmArea, farmRadius)
 
--- Crie a GUI
-local gui = Kaitun.CreateLib("Blox Fruits Hub", "Ocean")
-
--- Seção de farm
-local farmSection = gui:CreateSection("Farm")
-
--- Botão para farmar frutas
-farmSection:CreateToggle("Farmar Frutas", function(state)
-    if state then
-        -- Código para farmar frutas
-    else
-        -- Código para parar farm
+```-- Collect resources
+for _, resource in pairs(resources) do
+    -- Check if the resource is collectable
+    if resource:IsA("Part") and resource.Name == "Resource" then
+        -- Collect resource
+        local playerCharacter = game.Players.LocalPlayer.Character
+        if playerCharacter then
+            playerCharacter.HumanoidRootPart.CFrame = resource.CFrame
+            wait(0.5)
+            fireclickdetector(resource.ClickDetector)
+        end
     end
-end)
+end
+```
+end
 
--- Seção de recursos
-local resourceSection = gui:CreateSection("Recursos")
-
--- Botão para coletar recursos
-resourceSection:CreateToggle("Coletar Recursos", function(state)
-    if state then
-        -- Código para coletar recursos
-    else
-        -- Código para parar coleta
-    end
-end)
-
--- Seção de configurações
-local configSection = gui:CreateSection("Configurações")
-
--- Seleção de fruit para farmar
-configSection:CreateDropdown("Fruit para farmar", {"NomeDoFruit1", "NomeDoFruit2"}, function(selected)
-    -- Código para atualizar fruit
-end)
+-- Farm in loop
+while true do
+farmResources()
+wait(farmInterval)
+end
